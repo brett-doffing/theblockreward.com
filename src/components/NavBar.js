@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Divide as Hamburger } from 'hamburger-react';
+import './NavBar.css';
+import { Button } from './Button';
 
 function NavBar() {
     const [sideShown, setSideShown] = useState(false);
+    const [button, setButton] = useState(true);
 
     const closeMobileMenu = () => setSideShown(false);
+    const showButton = () => {
+        if (window.innerWidth <= 960) {
+            setButton(false);
+        } else {
+            setButton(true);
+        }
+    };
+
+    window.addEventListener('resize', showButton);
 
     return (
         <>
@@ -27,7 +39,7 @@ function NavBar() {
                     <ul className={sideShown ? 'nav-menu active' : 'nav-menu'}>
                         <li className='nav-item'>
                             <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                                Home
+                                Explorer
                             </Link>
                         </li>
                         <li className='nav-item'>
@@ -36,7 +48,7 @@ function NavBar() {
                             </Link>
                         </li>
                     </ul>
-                    
+                    {button && <Button buttonStyle='btn--outline'>Sign Up</Button>}
                 </div>
             </nav>
         </>
