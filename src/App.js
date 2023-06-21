@@ -1,11 +1,18 @@
  
 import './App.css';
+import NavBar from './components/NavBar';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <hi>The Block Reward</hi>
-    </div>
+    <>
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route path='/' exact />
+        </Routes>
+      </Router>
+    </>
   );
 }
 
