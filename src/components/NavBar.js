@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Divide as Hamburger } from 'hamburger-react';
 import './NavBar.css';
@@ -17,40 +17,59 @@ function NavBar() {
         }
     };
 
+    const [toggleMenu, setToggleMenu] = useState(false)
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+
+
+    const toggleNav = () => {
+        setToggleMenu(!toggleMenu)
+    }
+
+    useEffect(() => {
+        const changeWidth = () => {
+            setScreenWidth(window.innerWidth);
+        }
+
+        window.addEventListener('resize', changeWidth)
+
+        return () => {
+            window.removeEventListener('resize', changeWidth)
+        }
+    }, [])
+
     window.addEventListener('resize', showButton);
 
     return (
         <>
-            <nav className='navbar'>
-                <div className='navbar-container'>
-                    <Link to='/' className='navbar-logo'>
-                        TBR
+        <nav className='navbar'>
+            <ul>
+                <li className='navbar-logo'>
+                    <Link to='/'>
+                        {'T\u20bfR'}
                     </Link>
-                    <div className='menu-icon'>
-                    <Hamburger onToggle={toggled => {
-                        if (toggled) {
-                            // open a menu
-                        } else {
-                            // close a menu
-                        }
-                        }} 
+                </li>
+                <li>
+                    <Hamburger 
+                        toggled={sideShown} 
+                        toggle={setSideShown} 
+                        color='#ffffff' 
                     />
-                    </div>
-                    <ul className={sideShown ? 'nav-menu active' : 'nav-menu'}>
-                        <li className='nav-item'>
-                            <Link to='/' className='nav-links' onClick={closeMobileMenu}>
-                                Explorer
-                            </Link>
-                        </li>
-                        <li className='nav-item'>
-                            <Link to='/blog' className='nav-links' onClick={closeMobileMenu}>
-                                Blog
-                            </Link>
-                        </li>
-                    </ul>
-                    {button && <Button buttonStyle='btn--outline'>Sign Up</Button>}
-                </div>
-            </nav>
+                </li>
+                <li className='nav-links'>
+                    <Link to='/' onClick={closeMobileMenu}>
+                        Explorer
+                    </Link>
+                </li>
+                <li className='nav-links'>
+                    <Link to='/blog' onClick={closeMobileMenu}>
+                        Blog
+                    </Link>
+                </li>
+                <li className='nav-links'>
+                    <Button buttonStyle='btn--outline'>Sign Up</Button>
+                </li>
+            </ul>
+        </nav>
         </>
     )
 }
