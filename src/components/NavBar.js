@@ -5,68 +5,63 @@ import './NavBar.css';
 import { Button } from './Button';
 
 function NavBar() {
-    const [sideShown, setSideShown] = useState(false);
-    const [button, setButton] = useState(true);
-
-    const closeMobileMenu = () => setSideShown(false);
-    const showButton = () => {
-        if (window.innerWidth <= 960) {
-            setButton(false);
-        } else {
-            setButton(true);
-        }
-    };
-
-    const [toggleMenu, setToggleMenu] = useState(false)
+    const [showLinks, setShowLinks] = useState(true)
+    const [itemClassName, setItemClassName] = useState('nav-item')
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
 
     const toggleNav = () => {
-        setToggleMenu(!toggleMenu)
-    }
+        setItemClassName(showLinks ? 'nav-item-hidden' : 'nav-item')
+        setShowLinks(!showLinks)
+    };
 
     useEffect(() => {
         const changeWidth = () => {
+            if (screenWidth > 960) {
+                setShowLinks(true)
+                setItemClassName('nav-item')
+            } else {
+                setShowLinks(false)
+                setItemClassName('nav-item-hidden')
+            }
             setScreenWidth(window.innerWidth);
-        }
+        };
 
-        window.addEventListener('resize', changeWidth)
+        window.addEventListener('resize', changeWidth);
 
         return () => {
             window.removeEventListener('resize', changeWidth)
-        }
-    }, [])
-
-    window.addEventListener('resize', showButton);
+        };
+    }, [screenWidth])
 
     return (
         <>
         <nav className='navbar'>
             <ul>
                 <li className='navbar-logo'>
-                    <Link to='/'>
+                    <Link className='nav-link' to='/'>
                         {'T\u20bfR'}
                     </Link>
                 </li>
                 <li>
                     <Hamburger 
-                        toggled={sideShown} 
-                        toggle={setSideShown} 
+                        toggled={showLinks} 
+                        toggle={toggleNav} 
                         color='#ffffff' 
                     />
                 </li>
-                <li className='nav-links'>
-                    <Link to='/' onClick={closeMobileMenu}>
+                <li className={itemClassName}>
+                    <Link className='nav-link' to='/' onClick={toggleNav}>
                         Explorer
                     </Link>
                 </li>
-                <li className='nav-links'>
-                    <Link to='/blog' onClick={closeMobileMenu}>
+                <li className={itemClassName}>
+                    <Link className='nav-link' to='/blog' onClick={toggleNav}>
                         Blog
                     </Link>
                 </li>
-                <li className='nav-links'>
-                    <Button buttonStyle='btn--outline'>Sign Up</Button>
+                <li className={itemClassName}>
+                    <Button className='btn' buttonStyle='btn--outline'>Sign Up</Button>
                 </li>
             </ul>
         </nav>
