@@ -5,8 +5,8 @@ import './NavBar.css';
 import { Button } from './Button';
 
 function NavBar() {
-    const [showLinks, setShowLinks] = useState(true)
-    const [itemClassName, setItemClassName] = useState('nav-item')
+    const [showLinks, setShowLinks] = useState(false)
+    const [itemClassName, setItemClassName] = useState('nav-item-hidden')
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
 
@@ -17,15 +17,16 @@ function NavBar() {
 
     useEffect(() => {
         const changeWidth = () => {
-            if (screenWidth > 960) {
-                setShowLinks(true)
-                setItemClassName('nav-item')
-            } else {
-                setShowLinks(false)
-                setItemClassName('nav-item-hidden')
-            }
             setScreenWidth(window.innerWidth);
         };
+
+        if (screenWidth > 960) {
+            setShowLinks(true)
+            setItemClassName('nav-item')
+        } else {
+            setShowLinks(false)
+            setItemClassName('nav-item-hidden')
+        }
 
         window.addEventListener('resize', changeWidth);
 
