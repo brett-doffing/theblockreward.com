@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    /* width: 100%; */
+    /* height: 100%; */
+    align-items: center;
+    padding: 20px;
+    justify-content: center;
+    z-index: -1;
+}
+
+.container li {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    padding: 10px;
+    list-style: none;
+}
+
+.container p {
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: anywhere;
+}
+
+@media screen and (max-width: 960px) {
+    /* .container {
+        width: 100%;
+    } */
+
+    /* .container ul {
+        flex-wrap: wrap;
+    } */
+}
